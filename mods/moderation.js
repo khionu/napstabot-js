@@ -40,7 +40,6 @@ exports.func = (bot) => {
 
 			var member = message.mentions.members.first();
 
-
 			// snippet of https://github.com/IanMurray/AnnuBot/blob/master/commands/banid.js#L12
 
 			var person = args[0]
@@ -57,7 +56,7 @@ exports.func = (bot) => {
 					embed: {
 						title: `${member} has been kicked!`,
 						color: 0x2D882D,
-						description: `For: ${reason}`
+						description: `By: ${message.author.tag}\n For: ${reason}`
 					}
 				})
 			}).catch((error) => {
@@ -92,7 +91,7 @@ exports.func = (bot) => {
 					embed: {
 						title: `${member} has been banned!`,
 						color: 0x2D882D,
-						description: `For: ${reason}`
+						description: `By: ${message.author.tag}\n For: ${reason}`
 					}
 				})
 			}).catch((error) => {
@@ -158,8 +157,7 @@ exports.func = (bot) => {
 			}).then((messages) => {
 				message.channel.bulkDelete(messages, {
 						FilderOld: true
-					})
-					.then(messages => {
+					}).then(messages => {
 						message.reply(`I Pruned ${amount}!`)
 					}).catch(error => {
 						message.reply(`Could not prune messages!\n\n${error}`)
