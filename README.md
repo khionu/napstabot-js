@@ -23,6 +23,12 @@ commands.example = {
 }
 ```
 
-### Dark Sky API
+### API Keys
 
-You can get your dark sky's key ![here](https://darksky.net/dev/account).
+**Dark Sky**: https://darksky.net/dev/account
+
+**bots.discord.pw**: (abal): https://bots.discord.pw/api
+
+**Carbon**: ![Token by request](https://discord.gg/J2evbZB)
+
+
