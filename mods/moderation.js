@@ -46,9 +46,9 @@ exports.func = (bot) => {
 			args.shift()
 
 			if (args.join(" ") == "") {
-				reason = "No Reason Stated"
+				reason = `${message.author.tag}: No Reason Stated`
 			} else {
-				reason = args.join(" ")
+				reason = `${message.author.tag}: ${args.join(" ")}`
 			}
 
 			member.kick(reason).then((member) => {
@@ -81,9 +81,9 @@ exports.func = (bot) => {
 			args.shift()
 
 			if (args.join(" ") == "") {
-				reason = "No Reason Stated"
+				reason = `${message.author.tag}: No Reason Stated`
 			} else {
-				reason = args.join(" ")
+				reason = `${message.author.tag}: ${args.join(" ")}`
 			}
 
 			member.ban(reason).then((member) => {
