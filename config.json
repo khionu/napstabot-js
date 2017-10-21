@@ -1,6 +1,9 @@
+
 {
-	"token": "",
-	"prefix": "",
-	"botdevs": [""],
-	"skyKey": ""
+	"token": "token",
+	"prefix": "prefix",
+	"botdevs": ["User Id"],
+	"skyKey": "Dark Sky Api token",
+	"carbon": "Carbon api token",
+	"abal": "bots.pw api token",
 }

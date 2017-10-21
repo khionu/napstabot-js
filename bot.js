@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const carbon = require('./data/config/carbon.js');
 const fs = require('fs');
 const rightPad = require('right-pad');
 
@@ -13,6 +14,8 @@ var config = require("./config.json");
 
 bot.on('ready', () => {
 	console.log(`Shard #${bot.shard.id + 1} (ID: ${bot.shard.id}) logged in with ${bot.guilds.size} servers.`);
+	carbon.updateCarbon(config.carbon, bot.guilds.size, bot.shard.id, bot.shard.count);
+	carbon.updateAbal(bot.user.id, config.abal, bot.guilds.size, bot.shard.id, bot.shard.count);
 	bot.user.setGame(`Shard ${bot.shard.id + 1}/${bot.shard.count}`)
 
 	commands = {};
