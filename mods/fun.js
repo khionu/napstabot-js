@@ -108,7 +108,7 @@ exports.func = (bot) => {
 				let image_dodge = `./data/images/dodge/${randint(1, 11)}.gif`;
 				let image_shot = `./data/images/shot/${randint(1, 9)}.gif`;
 				let image_kms = `./data/images/suicide/${randint(1, 5)}.gif`;
-				let user = message.mentions.users.first() || message.author.id;
+				let user = message.mentions.users.first() || message.author;
 
 				if (bot.user.id == user.id) {
 					 message.channel.send(`You attempted to shoot me, ${message.author}, but I dodged it!`, {
