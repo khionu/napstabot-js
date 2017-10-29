@@ -5,5 +5,5 @@
 	"botdevs": ["User Id"],
 	"skyKey": "Dark Sky Api token",
 	"carbon": "Carbon api token",
-	"abal": "bots.pw api token",
+	"abal": "bots.pw api token"
 }
