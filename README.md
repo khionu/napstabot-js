@@ -29,6 +29,6 @@ commands.example = {
 
 **bots.discord.pw**: (abal): https://bots.discord.pw/api
 
-**Carbon**: ![Token by request](https://discord.gg/J2evbZB)
+**Carbon**: by request, https://discord.gg/J2evbZB
 
 
