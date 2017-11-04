@@ -32,5 +32,3 @@ commands.example = {
 **Carbon**: by request, https://discord.gg/J2evbZB
 
 **Google**: https://developers.google.com/maps/documentation/geocoding/start#get-a-key
-
-
