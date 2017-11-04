@@ -217,112 +217,109 @@ exports.func = (bot) => {
 
 		}
 	}
-//	commands.weather = {
-//		"help": "Gets the current weather of an area!",
-//		"helpcat": "Information",
-//		"aliases": ["weth"],
-//		"run": (message, args) => {
-//
-//			var place = args.join(" ")
-//
-//			if (place == "") {
-//				message.reply("You need to specify a place!");
-//				return;
-//			}
-//
-//			geocoder.geocode(place, (err, data) => { // TODO: EITHER USE A API KEY FOR GOOGLE GEOCODER API OR USE DIFFRENT LIB
-//				var response = data.results[0];
-//
-//				console.log(response)
-//				if(!response) {
-//					message.reply("Invaild location or error occurred.")
-//					return;
-//				}
-//
-//				var location = response.geometry.location;
-//
-//
-//				var info = darksky
-//					.coordinates(location)
-//					.language('en')
-//					.exclude('minutely,daily')
-//					.get().then((result) => {
-//					var title = response.formatted_address
-//					var json = result.currently
-//					var icon = json.icon
-//
-//					iconLookup = { // TODO: SET PROPER URLS HERE
-//						"clear-day":			"http://placehold.it/100x100?text=clear-day",
-//						"clear-night":			"http://placehold.it/100x100?text=clear-night",
-//						"rain":					"http://placehold.it/100x100?text=rain",
-//						"snow":					"http://placehold.it/100x100?text=snow",
-//						"sleet":				"http://placehold.it/100x100?text=sleet",
-//						"wind":					"http://placehold.it/100x100?text=wind",
-//						"fog":					"http://placehold.it/100x100?text=fog",
-//						"cloudy":				"http://placehold.it/100x100?text=cloudy",
-//						"partly-cloudy-day":	"http://placehold.it/100x100?text=partly-cloudy-day",
-//						"partly-cloudy-night":	"http://placehold.it/100x100?text=partly-cloudy-night",
-//					}
-//					var nullpixel = "https://raw.githubusercontent.com/aureooms/pixels/master/1x1%23000000.png" //  Transparent GIF pixel
-//
-//					var icon_url = iconLookup[icon] || nullpixel;
-//
-//					message.channel.send({
-//						embed: {
-//							title: `:cloud: Weather for ${title} :cloud:`,
-//							color: 0xff5555,
-//							thumbnail: {
-//								url: icon_url
-//							},
-//							fields: [{
-//									name: "Summary",
-//									value: json.summary || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Nearest Storm Distance Speed",
-//									value: `${json.nearestStormDistance} mph` || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Nearest Storm Bearing",
-//									value: json.nearestStormBearing || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Temperature",
-//									value: `${json.temperature} °F` || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Apparent Temperature",
-//									value: parseInt(json.apparentTemperature) || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Dewwing Point",
-//									value: parseInt(json.dewPoint) || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Humidity",
-//									value: parseInt(json.humidity) || "None",
-//									inline: true
-//								},
-//								{
-//									name: "Wind Speed",
-//									value: parseInt(json.windSpeed) || "None",
-//									inline: true
-//								}
-//							]
-//						}
-//					}).catch(e => console.log)
-//
-//				})
-//
-//			})
-//		}
-//	}
+	commands.weather = {
+		"help": "Gets the current weather of an area!",
+		"helpcat": "Information",
+		"reqperm": "BOTDEV", // TODO: REMOVE THIS WHEN FIXED
+		"aliases": ["weth"],
+		"run": (message, args) => {
+
+			var place = args.join(" ")
+
+			if (place == "") {
+				message.reply("You need to specify a place!");
+				return;
+			}
+
+			geocoder.geocode(place, (err, data) => { // TODO: EITHER USE A API KEY FOR GOOGLE GEOCODER API OR USE DIFFRENT LIB
+				var response = data.results[0];
+
+				console.log(response)
+				if(!response) {
+					message.reply("Invaild location or error occurred.")
+					return;
+				}
+
+				var location = response.geometry.location;
+
+
+				var info = darksky
+					.coordinates(location)
+					.language('en')
+					.exclude('minutely,daily')
+					.get().then((result) => {
+					var title = response.formatted_address
+					var json = result.currently
+					var icon = json.icon
+
+					emotes = {
+						"clear-day":			":sunny:",
+						"clear-night":			":full_moon:",
+						"rain":					":cloud_rain:",
+						"snow":					":snowflake:",
+						"sleet":				":cloud_rain:",
+						"wind":					":dash:",
+						"fog":					":foggy:",
+						"cloudy":				":cloud:",
+						"partly-cloudy-day":	":partly_sunny:",
+						"partly-cloudy-night":	":crescent_moon:",
+					}
+
+					var emote = emotes[icon] || "";
+
+					message.channel.send({
+						embed: {
+							title: `${emote} Weather for ${title} ${emote}`,
+							color: 0xff5555,
+							fields: [{
+									name: "Summary",
+									value: json.summary || "None",
+									inline: true
+								},
+								{
+									name: "Nearest Storm Distance Speed",
+									value: `${json.nearestStormDistance} mph` || "None",
+									inline: true
+								},
+								{
+									name: "Nearest Storm Bearing",
+									value: json.nearestStormBearing || "None",
+									inline: true
+								},
+								{
+									name: "Temperature",
+									value: `${json.temperature} °F` || "None",
+									inline: true
+								},
+								{
+									name: "Apparent Temperature",
+									value: parseInt(json.apparentTemperature) || "None",
+									inline: true
+								},
+								{
+									name: "Dewwing Point",
+									value: parseInt(json.dewPoint) || "None",
+									inline: true
+								},
+								{
+									name: "Humidity",
+									value: parseInt(json.humidity) || "None",
+									inline: true
+								},
+								{
+									name: "Wind Speed",
+									value: parseInt(json.windSpeed) || "None",
+									inline: true
+								}
+							]
+						}
+					}).catch(e => console.log)
+
+				})
+
+			})
+		}
+	}
 	commands.support = {
 		"help": "Sends the bots support guild",
 		"helpcat": "Information",
