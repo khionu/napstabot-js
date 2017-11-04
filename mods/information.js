@@ -5,8 +5,13 @@ const stringArgv = require("string-argv");
 
 const DarkSky = require('dark-sky')
 const darksky = new DarkSky(config.skyKey)
-const geocoder = require('geocoder');
 
+const NodeGeocoder = require('node-geocoder');
+const geocoder = NodeGeocoder({
+	provider: 'google',
+	httpAdapter: 'https',
+	apiKey: config.google,
+});
 
 exports.func = (bot) => {
 
@@ -220,7 +225,6 @@ exports.func = (bot) => {
 	commands.weather = {
 		"help": "Gets the current weather of an area!",
 		"helpcat": "Information",
-		"reqperm": "BOTDEV", // TODO: REMOVE THIS WHEN FIXED
 		"aliases": ["weth"],
 		"run": (message, args) => {
 
@@ -231,24 +235,20 @@ exports.func = (bot) => {
 				return;
 			}
 
-			geocoder.geocode(place, (err, data) => { // TODO: EITHER USE A API KEY FOR GOOGLE GEOCODER API OR USE DIFFRENT LIB
-				var response = data.results[0];
+			geocoder.geocode(place).then((res) => {
 
-				console.log(response)
-				if(!response) {
+				if(!res[0]) {
 					message.reply("Invaild location or error occurred.")
 					return;
 				}
 
-				var location = response.geometry.location;
-
-
 				var info = darksky
-					.coordinates(location)
+					.latitude(res[0].latitude)
+    				.longitude(res[0].longitude)
 					.language('en')
 					.exclude('minutely,daily')
 					.get().then((result) => {
-					var title = response.formatted_address
+					var title = res[0].formattedAddress
 					var json = result.currently
 					var icon = json.icon
 
@@ -262,7 +262,7 @@ exports.func = (bot) => {
 						"fog":					":foggy:",
 						"cloudy":				":cloud:",
 						"partly-cloudy-day":	":partly_sunny:",
-						"partly-cloudy-night":	":crescent_moon:",
+						"partly-cloudy-night":	":crescent_moon:"
 					}
 
 					var emote = emotes[icon] || "";
@@ -273,7 +273,7 @@ exports.func = (bot) => {
 							color: 0xff5555,
 							fields: [{
 									name: "Summary",
-									value: json.summary || "None",
+									value: json.summary || "Unknown",
 									inline: true
 								},
 								{
@@ -288,22 +288,22 @@ exports.func = (bot) => {
 								},
 								{
 									name: "Temperature",
-									value: `${json.temperature} °F` || "None",
+									value: `${json.temperature} °F` || "Unknown",
 									inline: true
 								},
 								{
 									name: "Apparent Temperature",
-									value: parseInt(json.apparentTemperature) || "None",
+									value: parseInt(json.apparentTemperature) || "Unknown",
 									inline: true
 								},
 								{
 									name: "Dewwing Point",
-									value: parseInt(json.dewPoint) || "None",
+									value: parseInt(json.dewPoint) || "Unknown",
 									inline: true
 								},
 								{
 									name: "Humidity",
-									value: parseInt(json.humidity) || "None",
+									value: parseInt(json.humidity) || "Unknown",
 									inline: true
 								},
 								{
@@ -313,11 +313,11 @@ exports.func = (bot) => {
 								}
 							]
 						}
-					}).catch(e => console.log)
+					}).catch(console.log)
 
 				})
 
-			})
+			}).catch(console.log)
 		}
 	}
 	commands.support = {
