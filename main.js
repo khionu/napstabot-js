@@ -8,8 +8,7 @@ try {
 }
 
 const manager = new Discord.ShardingManager("./bot.js", {
-	"token": config.token,
-//	"totalShards": 10 // for debugging, if not set uses auto mode.
+	"token": config.token
 });
 
 manager.spawn().catch((e) => console.log(e));
