@@ -18,4 +18,17 @@ exports.func = (bot) => {
 			}
 		}
 	}
+	commands.changeprefix = {
+		"aliases": ["prefix", "cp"],
+		"helpcat": "Core",
+		"reqperm": "ADMINISTRATOR",
+		"run": (message, args) => {
+			var serverConfig = require(`../data/config/server/${message.guild.id}.json`);
+			serverConfig.prefix = args.join(" ");
+			var data = JSON.stringify(serverConfig, null, 2);
+			fs.writeFileSync(`data/config/server/${message.guild.id}.json`, data);
+
+			message.reply(`I set my prefix to \`${serverConfig.prefix}\` for this guild!`)
+		}
+	}
 }

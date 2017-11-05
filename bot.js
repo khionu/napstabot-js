@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const carbon = require('./data/config/carbon.js');
 const fs = require('fs');
 const rightPad = require('right-pad');
+const dConfig = require('./data/config/default.js');
 
 const bot = new Discord.Client();
 
@@ -65,8 +66,16 @@ bot.on('ready', () => {
 	}
 });
 
+bot.on('guildCreate', (message) => {
+    dConfig.createGuild(message.guild.id);
+});
+
 bot.on('message', (message) => {
-	var prefix = config.prefix
+	if (!fs.existsSync(`./data/config/server/${message.guild.id}.json`)) {
+	    dConfig.createGuild(message.guild.id);
+	}
+	var guildConfig = require(`./data/config/server/${message.guild.id}.json`);
+	var prefix = guildConfig.prefix || config.prefix
 
 	if (message.author.id == bot.user.id) return;
 	if (!message.content.startsWith(prefix)) return;

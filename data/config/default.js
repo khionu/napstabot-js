@@ -7,7 +7,7 @@ var dConfig = {
 			id: id,
 			security: {
 				noMassmention: false,
-				noTY: false,
+				noYT: false,
 				noInvite: false
 
 			}
