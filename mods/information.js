@@ -250,7 +250,7 @@ exports.func = (bot) => {
 				}
 
 				var info = darksky
-					latitude(res[0].latitude)
+					.latitude(res[0].latitude)
 					.longitude(res[0].longitude)
 					.language('en')
 					.exclude('minutely,daily')
