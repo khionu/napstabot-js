@@ -3,15 +3,20 @@ const config = require("../config.json");
 const request = require("request");
 const stringArgv = require("string-argv");
 
-const DarkSky = require('dark-sky')
-const darksky = new DarkSky(config.skyKey)
+var weaDisabled = false
+if(config.skyKey) {
+        const DarkSky = require('dark-sky')
+        const darksky = new DarkSky(config.skyKey)
+} else weaDisabled = true
 
-const NodeGeocoder = require('node-geocoder');
-const geocoder = NodeGeocoder({
-	provider: 'google',
-	httpAdapter: 'https',
-	apiKey: config.google,
-});
+if(config.google) {
+        const NodeGeocoder = require('node-geocoder');
+        const geocoder = NodeGeocoder({
+                provider: 'google',
+                httpAdapter: 'https',
+                apiKey: config.google,
+        });
+} else weaDisabled = true
 
 exports.func = (bot) => {
 
@@ -227,24 +232,26 @@ exports.func = (bot) => {
 		"helpcat": "Information",
 		"aliases": ["weth"],
 		"run": (message, args) => {
+			if(weaDisabled) {
+				message.reply(":warning: This command is disabled due to required API tokens being unspecified.")
+				return;
+			}
 
 			var place = args.join(" ")
-
 			if (place == "") {
 				message.reply("You need to specify a place!");
 				return;
 			}
 
 			geocoder.geocode(place).then((res) => {
-
 				if(!res[0]) {
 					message.reply("Invaild location or error occurred.")
 					return;
 				}
 
 				var info = darksky
-					.latitude(res[0].latitude)
-    				.longitude(res[0].longitude)
+					latitude(res[0].latitude)
+					.longitude(res[0].longitude)
 					.language('en')
 					.exclude('minutely,daily')
 					.get().then((result) => {
