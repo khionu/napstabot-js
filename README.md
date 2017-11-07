@@ -41,6 +41,9 @@ commands.example = {
 *API Keys are not required for any service, but some functions may be disabled if they are unspecified.*
 
 **Dark Sky**: https://darksky.net/dev/account
+
 **Carbon**: By request, https://discord.gg/J2evbZB
+
 **bots.discord.pw** *(abal)*:  https://bots.discord.pw/api
+
 **Google Geocoding**: https://developers.google.com/maps/documentation/geocoding/start#get-a-key
