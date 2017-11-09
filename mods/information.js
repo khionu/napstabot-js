@@ -209,6 +209,50 @@ exports.func = (bot) => {
 		}
 
 	}
+	commands.stats = {
+		"help": "Gets the Napstas stats",
+		"helpcat": "Information",
+		"aliases": ["botinfo", "info"],
+		"run": (message, args) => {
+
+			var privServers = 0
+			bot.guilds.reduce((l, g) => {
+    			if(!g.large) privServers++
+			});
+
+			message.channel.send({
+				embed: {
+					title: ":information_source: Napstabot's Information: :information_source:",
+					color: 0xff5555,
+					description: "Napstabot was coded by Pierce#7555 and Lyrus#5251!",
+					thumbnail: {
+						url: bot.user.displayAvatarURL
+					},
+					fields: [{
+							name: "Start Time",
+							value: bot.readyAt,
+							inline: true
+						},
+						{
+							name: "Private Servers",
+							value: privServers,
+							inline: true
+						},
+						{
+							name: "Total Servers on Shard",
+							value: bot.guilds.size,
+							inline: true
+						},
+						{
+							name: "Shard Info",
+							value: `${bot.shard.id + 1}/${bot.shard.count}`,
+							inline: true
+						}
+					]
+				}
+			})
+		}
+	}
 	commands.avatar = {
 		"help": "Gets your avatar or another memebers",
 		"helpcat": "Information",
