@@ -74,12 +74,12 @@ bot.on('message', (message) => {
 	// if (!fs.existsSync(`./data/config/serverDB.json`)) {
 	//     dConfig.createGuild(message.guild.id);
 	// }
-
-	dConfig.createGuild(message.guild.id);
+	
 
 	var guildConfig = require(`./data/config/server/serverDB.json`);
+
 	if (!guildConfig[`${message.guild.id}`]) {
-		var prefix = config.prefix
+		dConfig.createGuild(message.guild.id);
 	} else {
 		var prefix = guildConfig[`${message.guild.id}`].prefix
 	};

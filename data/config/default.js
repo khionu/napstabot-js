@@ -1,11 +1,15 @@
 const fs = require('fs');
 
+const path = require('path');
+const appDir = path.dirname(require.main.filename);
+const config = require(appDir + "/config.json");
+
 var dConfig = {
 	createGuild: function(id) {
 		let file = fs.readFileSync("data/config/server/serverDB.json");
 		let info = JSON.parse(file);
 		info[id] = {
-			prefix: "&&&",
+			prefix: config.prefix,
 			security: {
 				noMassmention: false,
 				noYT: false,
