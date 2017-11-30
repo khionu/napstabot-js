@@ -71,11 +71,18 @@ bot.on('guildCreate', (message) => {
 });
 
 bot.on('message', (message) => {
-	if (!fs.existsSync(`./data/config/server/${message.guild.id}.json`)) {
-	    dConfig.createGuild(message.guild.id);
-	}
-	var guildConfig = require(`./data/config/server/${message.guild.id}.json`);
-	var prefix = guildConfig.prefix || config.prefix
+	// if (!fs.existsSync(`./data/config/serverDB.json`)) {
+	//     dConfig.createGuild(message.guild.id);
+	// }
+
+	dConfig.createGuild(message.guild.id);
+
+	var guildConfig = require(`./data/config/server/serverDB.json`);
+	if (!guildConfig[`${message.guild.id}`]) {
+		var prefix = config.prefix
+	} else {
+		var prefix = guildConfig[`${message.guild.id}`].prefix
+	};
 
 	if (message.author.id == bot.user.id) return;
 	if (!message.content.startsWith(prefix)) return;
